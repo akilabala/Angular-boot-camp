@@ -5,23 +5,6 @@ describe('userListCtrl', function () {
 
   beforeEach(module('ps.user-list'));
 
-
-  //This is one way to mock it.
-
-  /*beforeEach(inject(function ($controller) {
-    userListCtrl = $controller('UserListCtrl', {
-      userListModel: {
-        getUsers: function () {
-          return {
-            then: function () {
-            }
-          }
-        }
-      }
-    });
-  }));*/
-
-
   beforeEach(inject(function ($controller) {
     userListModel = {
       getUsersWasCalled: false,
