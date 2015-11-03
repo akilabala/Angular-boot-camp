@@ -1,12 +1,14 @@
-angular.module('ps.models.user-list', [])
+angular.module('ps.models.user-list', [
+    'project-seed.config.constants'
+])
 
   .service('userListModel', userListModelFunc);
 
-function userListModelFunc($http) {
+function userListModelFunc($http, baseApiUrl) {
   var userList = this;
 
   userList.getUsers = function () {
-    return $http.get('http://api.github.com/users').then(function (result) {
+    return $http.get(baseApiUrl + '/users').then(function (result) {
       return result.data;
     })
   }

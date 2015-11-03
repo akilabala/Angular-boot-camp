@@ -16,7 +16,7 @@ function configFunction($stateProvider) {
     })
 }
 
-function UserListCtrlFunc(userListModel) {
+function UserListCtrlFunc(userListModel, $state) {
   var usrList = this;
 
   userListModel.getUsers().then(function (users) {
@@ -24,6 +24,7 @@ function UserListCtrlFunc(userListModel) {
   });
 
   usrList.manipulateClick = function (user) {
+    $state.go('userProfile', {userName: user.login});
     console.log('Manipulating the click for ' + user.login);
   }
 }
