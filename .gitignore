@@ -1,0 +1,9 @@
+.idea
+/node_modules
+/build/karma.conf.js
+/build/vendor.js
+/build/common
+/build/app
+/build/index.html
+/build/css
+/build/assets
