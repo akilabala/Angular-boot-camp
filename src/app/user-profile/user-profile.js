@@ -1,4 +1,6 @@
 angular.module('ps.user-profile', [
+    'ps.user-events',
+    'ps.user-repos'
   ])
   .config(configFunction)
   .controller('UserProfileCtrl', UserProfileCtrlFunc);
@@ -16,7 +18,7 @@ function configFunction($stateProvider) {
 function UserProfileCtrlFunc($http, baseApiUrl, $stateParams) {
   var userProfile = this;
 
- $http.get(baseApiUrl + '/users/' + $stateParams.userName).then(function(result){
-   userProfile.user = result.data;
- });
+  $http.get(baseApiUrl + '/users/' + $stateParams.userName).then(function (result) {
+    userProfile.user = result.data;
+  });
 }
