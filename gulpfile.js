@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
     rimraf = require('gulp-rimraf'),
     less = require('gulp-less'),
+    sass = require('gulp-sass'),
     inject = require("gulp-inject"),
     runSequence = require('run-sequence'),
     rename = require("gulp-rename"),
@@ -26,6 +27,7 @@ gulp.task('build', function(callback) {
     'browserify-vendor',
     'html2js',
     'less',
+    'sass',
     'index',
     'karmaConfig',
     callback);
@@ -92,9 +94,35 @@ gulp.task('less', function () {
     .pipe(gulp.dest('./build/css/'));
 });
 
+gulp.task('sass', function () {
+  return gulp.src('./src/sass/main.sass')
+    .pipe(sass({
+          compile: true,
+          compress: false,
+          noUnderscores: false,
+          noIDs: false,
+          zeroUnits: false
+        }))
+    .pipe(rename(pkg.name + '-' + pkg.version + '.css'))
+    .pipe(gulp.dest('./build/css/'));
+});
+
 gulp.task('less-compile', function () {
   return gulp.src('./src/less/main.less')
     .pipe(less({
+          compile: true,
+          compress: true,
+          noUnderscores: false,
+          noIDs: false,
+          zeroUnits: false
+        }))
+    .pipe(rename(pkg.name + '-' + pkg.version + '.css'))
+    .pipe(gulp.dest('./bin/assets/'));
+});
+
+gulp.task('sass-compile', function () {
+  return gulp.src('./src/sass/main.sass')
+    .pipe(sass({
           compile: true,
           compress: true,
           noUnderscores: false,
@@ -174,6 +202,7 @@ gulp.task('compile', function(callback) {
     'ngmin',
     'uglify',
     'less-compile',
+    'sass-compile',
     'index-compile',
     callback);
 });
@@ -202,6 +231,7 @@ gulp.task('watch', function () {
   gulp.watch(files.app_files.atpl, ['html2js', 'index']);
   gulp.watch(files.app_files.html, ['index']);
   gulp.watch(files.app_files.styles, ['less', 'index']);
+  gulp.watch(files.app_files.styles, ['sass', 'index']);
   gulp.watch(files.app_files.jsunit, ['karmaConfig']);
   gulp.watch(files.app_files.vendor, ['browserify-vendor']);
   //gulp.watch('./src/config/**/*.json', ['config-build']);
